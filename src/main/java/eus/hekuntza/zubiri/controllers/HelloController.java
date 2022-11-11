@@ -14,9 +14,8 @@ public class HelloController {
   }
   
   @GetMapping("/main")
-  @ResponseBody
   public String main() {
-    return "You're in!";
+    return "main";
   }
   
 }

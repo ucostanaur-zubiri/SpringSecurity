@@ -1,6 +1,6 @@
 package eus.hekuntza.zubiri.dto;
 
-import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

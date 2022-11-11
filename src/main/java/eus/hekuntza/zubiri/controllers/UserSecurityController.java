@@ -1,5 +1,7 @@
 package eus.hekuntza.zubiri.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import eus.hekuntza.zubiri.model.entities.User;
 import eus.hekuntza.zubiri.model.repositories.UserRepository;
 
 @Controller
-@RequestMapping("/security")
+@RequestMapping("")
 public class UserSecurityController {
 
   @Autowired
@@ -47,9 +49,10 @@ public class UserSecurityController {
   public String registration(@Valid @ModelAttribute("user") UserDto userDto,
                              BindingResult result,
                              Model model){
-      User existingUser = userRepository.findUserByUsername(userDto.getUsername()).get();
+    
+      Optional<User> existingUser = userRepository.findUserByUsername(userDto.getUsername());
 
-      if(existingUser != null && existingUser.getUsername() != null){
+      if(existingUser.isPresent() && existingUser.get().getUsername() != null){
           result.rejectValue("username", null,
                   "There is already an account registered with the same username");
       }
