@@ -19,7 +19,7 @@ public class AuthenticationProviderService implements AuthenticationProvider {
   private JpaUserDetailsService userDetailsService;
   
   @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private PasswordEncoder passwordEncoder;
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -27,12 +27,7 @@ public class AuthenticationProviderService implements AuthenticationProvider {
       String password = authentication.getCredentials().toString();
 
       CustomUserDetails user = userDetailsService.loadUserByUsername(username);
-      return checkPassword(user, password, bCryptPasswordEncoder);
-  }
-
-  @Override
-  public boolean supports(Class<?> aClass) {
-      return UsernamePasswordAuthenticationToken.class.isAssignableFrom(aClass);
+      return checkPassword(user, password, passwordEncoder);
   }
 
   private Authentication checkPassword(CustomUserDetails user, String rawPassword, PasswordEncoder encoder) {
@@ -44,6 +39,11 @@ public class AuthenticationProviderService implements AuthenticationProvider {
       } else {
           throw new BadCredentialsException("Bad credentials");
       }
+  }
+
+  @Override
+  public boolean supports(Class<?> aClass) {
+      return UsernamePasswordAuthenticationToken.class.isAssignableFrom(aClass);
   }
   
 }

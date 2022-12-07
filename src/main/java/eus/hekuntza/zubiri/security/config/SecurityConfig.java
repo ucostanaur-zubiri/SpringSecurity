@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import eus.hekuntza.zubiri.filters.AuthenticationLogginFilter;
 import eus.hekuntza.zubiri.security.services.AuthenticationProviderService;
 
 @Configuration
@@ -32,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        */
 
       http.csrf().disable();
-      http.authorizeRequests().anyRequest().permitAll()
+      http.addFilterAfter(new AuthenticationLogginFilter(), UsernamePasswordAuthenticationFilter.class)
+        .authorizeRequests().anyRequest().permitAll()
         .and()
         .formLogin(
                 form -> form

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import eus.hekuntza.zubiri.dto.UserDto;
 import eus.hekuntza.zubiri.model.entities.User;
@@ -37,6 +38,7 @@ public class UserSecurityController {
   }
 
   @GetMapping("/register")
+  @ResponseBody
   public String showRegistrationForm(Model model){
       // create model object to store form data
       UserDto user = new UserDto();
