@@ -38,7 +38,6 @@ public class UserSecurityController {
   }
 
   @GetMapping("/register")
-  @ResponseBody
   public String showRegistrationForm(Model model){
       // create model object to store form data
       UserDto user = new UserDto();
