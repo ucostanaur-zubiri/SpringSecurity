@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +27,7 @@ public class UserSecurityController {
   UserRepository userRepository;
   
   @Autowired
-  BCryptPasswordEncoder bCryptPasswordEncoder;
+  PasswordEncoder passwordEncoder;
   
   @GetMapping("/login")
   public String showLoginForm(Model model){
@@ -64,7 +64,7 @@ public class UserSecurityController {
           return "/register";
       }
       
-      String pass = bCryptPasswordEncoder.encode(userDto.getPassword());
+      String pass = passwordEncoder.encode(userDto.getPassword());
       User u = new User(userDto.getUsername(), pass);
       userRepository.save(u);     
 
